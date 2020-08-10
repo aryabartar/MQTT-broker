@@ -1,5 +1,6 @@
 import time
 import paho.mqtt.client as paho
+from random import randrange
 
 broker = "192.168.1.13"
 
@@ -22,10 +23,14 @@ client.on_message = on_message
 print("connecting to broker ", broker)
 client.connect(broker)  # connect
 client.subscribe("home/t1")  # subscribe
+client.loop_start()  # start loop to process received messages
 
-client.loop_forever()  # start loop to process received messages
-
-print("subscribing ")
+time.sleep(2)
+while True:
+    generated_num = randrange(100)
+    print("\nGenerated num was: ", generated_num)
+    client.publish("home/t2", generated_num)
+    time.sleep(5)
 
 client.disconnect()  # disconnect
 client.loop_stop()  # stop loop
