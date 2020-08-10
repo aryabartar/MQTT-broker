@@ -1,36 +1,31 @@
-import paho.mqtt.client as mqtt
 import time
+import paho.mqtt.client as paho
+
+broker = "192.168.1.13"
 
 
-def on_log(client, userdata, level, buf):
-    print("log: " + buf)
-
-
-def on_connect(client, userdata, flags, rc):
+def on_connect(c, ud, flags, rc):
     if rc == 0:
-        print("Connected, OK")
+        print("Client connected")
     else:
-        print("Bad connection!", rc)
+        print("Client not connected")
 
 
-def on_disconnect(client, userdata, flags, rc=0):
-    print("Disconnected result code " + str(rc))
+def on_message(client, userdata, message):
+    time.sleep(1)
+    print("received message =", str(message.payload.decode("utf-8")))
 
 
-broker = "broker"
-client = mqtt.Client("node1")
+client = paho.Client("node1")
+client.on_message = on_message
 
-client.on_connect = on_connect
-client.on_log = on_log
+print("connecting to broker ", broker)
+client.connect(broker)  # connect
+client.subscribe("home/t1")  # subscribe
 
-print("Connecting to broker ", broker)
-client.connect(broker)
-client.loop_start()
+client.loop_forever()  # start loop to process received messages
 
-client.publish("hello2")
-client.publish("test", "hello2")
+print("subscribing ")
 
-time.sleep(4)
-
-client.loop_stop()
-client.disconnect()
+client.disconnect()  # disconnect
+client.loop_stop()  # stop loop
