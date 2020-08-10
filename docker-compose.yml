@@ -1,0 +1,31 @@
+version: "3"
+
+networks:
+ nt:
+  driver: bridge
+
+services:
+
+  #######################################
+  # Postgres: The database used by Kong
+  #######################################
+  node1:
+    image: ubuntu
+    networks:
+      - nt
+    stdin_open: true
+    tty: true
+
+  node2:
+    image: ubuntu
+    networks:
+      - nt
+    stdin_open: true
+    tty: true
+
+  broker:
+    image: ubuntu
+    networks:
+      - nt
+    stdin_open: true
+    tty: true
