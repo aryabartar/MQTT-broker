@@ -6,9 +6,6 @@ networks:
 
 services:
 
-  #######################################
-  # Postgres: The database used by Kong
-  #######################################
   node1:
     image: ubuntu
     networks:

@@ -1,7 +1,7 @@
 import time
 import paho.mqtt.client as paho
 
-broker = "192.168.1.13"
+broker = "broker"
 
 
 def on_message(client, userdata, message):

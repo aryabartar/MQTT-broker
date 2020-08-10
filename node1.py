@@ -2,7 +2,7 @@ import time
 import paho.mqtt.client as paho
 from random import randrange
 
-broker = "192.168.1.13"
+broker = "broker"
 
 
 def on_connect(c, ud, flags, rc):
